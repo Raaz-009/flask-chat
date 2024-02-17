@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <title>Chat App</title>
+</head>
+<body>
+    <div class="container">
+        <h1>My Website</h1>
+        <form onsubmit="sendMessage(event)">
+            <ul id="messages">
+               
+            </ul>
+
+            <input type="text" id="msginput" placeholder="Type your message">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        const socket = io();
+        let messagesList = document.getElementById("messages");
+        let mesgcontent = document.querySelector(".container");
+
+        socket.on("connect", () => {
+            let p = document.createElement("p");
+            p.innerText = "You are connected";
+            mesgcontent.appendChild(p);
+        });
+
+        function sendMessage(event) {
+            event.preventDefault(); // Prevent form submission and page reload
+            let msginput = document.getElementById("msginput");
+            socket.emit("message", msginput.value);
+            msginput.value = "";
+        }
+
+        socket.on('message', (message) => {
+            let messageElement = document.createElement("li"); // Assuming you want to use list items
+            messageElement.innerText = message;
+
+            // Insert the new message at the beginning of the list
+            messagesList.insertBefore(messageElement, messagesList.firstChild);
+        });
+    </script>
+</body>
+</html>
