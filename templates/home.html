@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Username Entry</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Enter Your Username</h1>
+        <form onsubmit="enterUsername(event)">
+            <input type="text" id="usernameInput" placeholder="Enter your username" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function enterUsername(event) {
+            event.preventDefault();
+            const usernameInput = document.getElementById("usernameInput").value;
+            localStorage.setItem("username", usernameInput);
+            window.location.href = "/chat";
+        }
+    </script>
+</body>
+</html>

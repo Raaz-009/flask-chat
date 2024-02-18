@@ -11,7 +11,12 @@ def handle_message(message):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('home.html')
+    
+
+@app.route('/chat')
+def chat():
+    return render_template('chat.html')
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
